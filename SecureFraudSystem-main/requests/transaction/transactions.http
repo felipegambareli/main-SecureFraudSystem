@@ -1,0 +1,354 @@
+# =============================
+# Listar todas as transações
+# =============================
+GET http://localhost:8080/transactions
+Accept: application/json
+
+### Exemplo de resposta: 200 OK
+# [
+#   {
+#     "id": "uuid-da-transacao-1",
+#     "tipo": "DEPOSITO",
+#     "valor": 150.75,
+#     "dataHora": "2025-06-08T10:00:00",
+#     "descricao": "Depósito de salário mensal",
+#     "contaDeOrigem": null,
+#     "contaDeDestino": "uuid-da-conta-destino"
+#   },
+#   {
+#     "id": "uuid-da-transacao-2",
+#     "tipo": "SAQUE",
+#     "valor": 75.00,
+#     "dataHora": "2025-06-08T11:30:00",
+#     "descricao": "Saque em caixa eletrônico",
+#     "contaDeOrigem": "uuid-da-conta-origem",
+#     "contaDeDestino": null
+#   }
+# ]
+
+# =============================
+# Buscar transação por ID
+# =============================
+GET http://localhost:8080/transactions/{id}
+Accept: application/json
+
+### Exemplo de resposta: 200 OK
+# {
+#   "id": "uuid-da-transacao",
+#   "tipo": "DEPOSITO",
+#   "valor": 150.75,
+#   "dataHora": "2025-06-08T10:00:00",
+#   "descricao": "Depósito de salário mensal",
+#   "contaDeOrigem": null,
+#   "contaDeDestino": "uuid-da-conta-destino"
+# }
+
+### Exemplo de resposta: 404 Not Found
+# {
+#   "status": 404,
+#   "error": "Not Found",
+#   "message": "Transação não encontrada.",
+#   "path": "/transactions/{id}"
+# }
+
+# =============================
+# Criar nova transação - DEPOSITO
+# =============================
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "DEPOSITO",
+  "valor": 150.75,
+  "dataHora": "2025-06-08T10:00:00",
+  "descricao": "Depósito de salário mensal",
+  "contaDeOrigem": null,
+  "contaDeDestino": "uuid-da-conta-destino-valida"
+}
+
+### Exemplo de resposta: 201 Created
+# {
+#   "id": "uuid-da-transacao-criada",
+#   "tipo": "DEPOSITO",
+#   "valor": 150.75,
+#   "dataHora": "2025-06-08T10:00:00",
+#   "descricao": "Depósito de salário mensal",
+#   "contaDeOrigem": null,
+#   "contaDeDestino": "uuid-da-conta-destino-valida"
+# }
+
+# =============================
+# Criar nova transação - SAQUE
+# =============================
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "SAQUE",
+  "valor": 75.00,
+  "dataHora": "2025-06-08T11:30:00",
+  "descricao": "Saque em caixa eletrônico",
+  "contaDeOrigem": "uuid-da-conta-origem-valida",
+  "contaDeDestino": null
+}
+
+### Exemplo de resposta: 201 Created
+# {
+#   "id": "uuid-da-transacao-criada",
+#   "tipo": "SAQUE",
+#   "valor": 75.00,
+#   "dataHora": "2025-06-08T11:30:00",
+#   "descricao": "Saque em caixa eletrônico",
+#   "contaDeOrigem": "uuid-da-conta-origem-valida",
+#   "contaDeDestino": null
+# }
+
+# =============================
+# Criar nova transação - TRANSFERENCIA
+# =============================
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "TRANSFERENCIA",
+  "valor": 250.00,
+  "dataHora": "2025-06-08T12:45:00",
+  "descricao": "Transferência para amigo",
+  "contaDeOrigem": "uuid-da-conta-origem-valida",
+  "contaDeDestino": "uuid-da-conta-destino-valida"
+}
+
+### Exemplo de resposta: 201 Created
+# {
+#   "id": "uuid-da-transacao-criada",
+#   "tipo": "TRANSFERENCIA",
+#   "valor": 250.00,
+#   "dataHora": "2025-06-08T12:45:00",
+#   "descricao": "Transferência para amigo",
+#   "contaDeOrigem": "uuid-da-conta-origem-valida",
+#   "contaDeDestino": "uuid-da-conta-destino-valida"
+# }
+
+# =============================
+# Criar nova transação - PAGAMENTO
+# =============================
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "PAGAMENTO",
+  "valor": 120.50,
+  "dataHora": "2025-06-08T14:00:00",
+  "descricao": "Pagamento de conta de luz",
+  "contaDeOrigem": "uuid-da-conta-origem-valida",
+  "contaDeDestino": null
+}
+
+### Exemplo de resposta: 201 Created
+# {
+#   "id": "uuid-da-transacao-criada",
+#   "tipo": "PAGAMENTO",
+#   "valor": 120.50,
+#   "dataHora": "2025-06-08T14:00:00",
+#   "descricao": "Pagamento de conta de luz",
+#   "contaDeOrigem": "uuid-da-conta-origem-valida",
+#   "contaDeDestino": null
+# }
+
+# =============================
+# Atualizar transação por ID
+# =============================
+PUT http://localhost:8080/transactions/{id}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "DEPOSITO",
+  "valor": 175.50,
+  "dataHora": "2025-06-08T17:00:00",
+  "descricao": "Depósito de salário mensal - Atualizado",
+  "contaDeOrigem": null,
+  "contaDeDestino": "uuid-da-conta-destino-valida"
+}
+
+### Exemplo de resposta: 200 OK
+# {
+#   "id": "id-da-transacao-existente",
+#   "tipo": "DEPOSITO",
+#   "valor": 175.50,
+#   "dataHora": "2025-06-08T17:00:00",
+#   "descricao": "Depósito de salário mensal - Atualizado",
+#   "contaDeOrigem": null,
+#   "contaDeDestino": "uuid-da-conta-destino-valida"
+# }
+
+### Exemplo de resposta: 404 Not Found
+# {
+#   "status": 404,
+#   "error": "Not Found",
+#   "message": "Transação não encontrada.",
+#   "path": "/transactions/{id}"
+# }
+
+# =============================
+# Deletar transação por ID
+# =============================
+DELETE http://localhost:8080/transactions/{id}
+Accept: application/json
+
+### Exemplo de resposta: 204 No Content
+
+### Exemplo de resposta: 404 Not Found
+# {
+#   "status": 404,
+#   "error": "Not Found",
+#   "message": "Transação não encontrada.",
+#   "path": "/transactions/{id}"
+# }
+
+# =============================
+# Exemplos de erros de validação e regras de negócio
+# =============================
+# Valor nulo
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "DEPOSITO",
+  "valor": null,
+  "dataHora": "2025-06-08T15:00:00",
+  "descricao": "Depósito com valor nulo",
+  "contaDeOrigem": null,
+  "contaDeDestino": "uuid-da-conta-destino-valida"
+}
+
+### Exemplo de resposta: 400 Bad Request
+# {
+#   "timestamp": "2025-06-08T15:00:00.000+00:00",
+#   "status": 400,
+#   "error": "Bad Request",
+#   "message": "Validation failed for object='transactionDTO'. Error count: 1",
+#   "errors": [
+#     {
+#       "field": "valor",
+#       "defaultMessage": "O valor da transação é obrigatório."
+#     }
+#   ]
+# }
+
+# Tipo incorreto
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "TIPO_INVALIDO",
+  "valor": 10.00,
+  "dataHora": "2025-06-08T15:05:00",
+  "descricao": "Transação com tipo inválido",
+  "contaDeOrigem": null,
+  "contaDeDestino": "uuid-da-conta-destino-valida"
+}
+
+### Exemplo de resposta: 400 Bad Request
+# {
+#   "timestamp": "2025-06-08T15:05:00.000+00:00",
+#   "status": 400,
+#   "error": "Bad Request",
+#   "message": "JSON parse error: Cannot deserialize value of type `com.bradesco.antifraud.model.Transaction$TransactionType` from String \"TIPO_INVALIDO\": not one of the values expected from Enum class: [SAQUE, DEPOSITO, TRANSFERENCIA, PAGAMENTO]",
+#   "path": "/transactions"
+# }
+
+# Regra: Depósito com conta de origem
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "DEPOSITO",
+  "valor": 100.00,
+  "dataHora": "2025-06-08T16:00:00",
+  "descricao": "Depósito com conta de origem (erro)",
+  "contaDeOrigem": "uuid-da-conta-origem-valida",
+  "contaDeDestino": "uuid-da-conta-destino-valida"
+}
+
+### Exemplo de resposta: 409 Conflict
+# {
+#   "timestamp": "2025-06-08T16:00:00.000+00:00",
+#   "status": 409,
+#   "error": "Conflict",
+#   "message": "Para depósito, não deve haver conta de origem.",
+#   "path": "/transactions"
+# }
+
+# Regra: Saque sem conta de origem
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "SAQUE",
+  "valor": 50.00,
+  "dataHora": "2025-06-08T16:15:00"
+}
+
+### Exemplo de resposta: 409 Conflict
+# {
+#   "timestamp": "2025-06-08T16:15:00.000+00:00",
+#   "status": 409,
+#   "error": "Conflict",
+#   "message": "Para saque, deve haver uma conta de origem.",
+#   "path": "/transactions"
+# }
+
+# Regra: Transferência com contas iguais
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "TRANSFERENCIA",
+  "valor": 200.00,
+  "dataHora": "2025-06-08T16:30:00",
+  "descricao": "Transferência com contas iguais",
+  "contaDeOrigem": "uuid-da-conta-igual",
+  "contaDeDestino": "uuid-da-conta-igual"
+}
+
+### Exemplo de resposta: 409 Conflict
+# {
+#   "timestamp": "2025-06-08T16:30:00.000+00:00",
+#   "status": 409,
+#   "error": "Conflict",
+#   "message": "Conta de origem e destino não podem ser a mesma para transferência.",
+#   "path": "/transactions"
+# }
+
+# Regra: Saque com conta de destino na atualização
+PUT http://localhost:8080/transactions/{id-de-saque-existente}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "SAQUE",
+  "valor": 80.00,
+  "dataHora": "2025-06-08T17:45:00",
+  "descricao": "Saque com conta de destino (erro)",
+  "contaDeOrigem": "uuid-da-conta-origem-valida",
+  "contaDeDestino": "uuid-da-conta-destino-nao-permitida"
+}
+
+### Exemplo de resposta: 409 Conflict
+# {
+#   "timestamp": "2025-06-08T17:45:00.000+00:00",
+#   "status": 409,
+#   "error": "Conflict",
+#   "message": "Para saque, não deve haver conta de destino.",
+#   "path": "/transactions/{id-de-saque-existente}"
+# }
